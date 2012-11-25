@@ -72,7 +72,6 @@
 		6D8354E7165E1FFF0046D843 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D8354E6165E1FFF0046D843 /* libxml2.dylib */; };
 		6D8354E9165E20090046D843 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D8354E8165E20090046D843 /* CoreText.framework */; };
 		6D835516165E213D0046D843 /* DTTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D835515165E213D0046D843 /* DTTestViewController.m */; };
-		6D83553F165E3A3A0046D843 /* CoreTextIssues.html in Resources */ = {isa = PBXBuildFile; fileRef = 6D83553E165E3A3A0046D843 /* CoreTextIssues.html */; };
 		6D835557165E3C170046D843 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D835556165E3C170046D843 /* MediaPlayer.framework */; };
 		6D83555D165E3E030046D843 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D83555C165E3E030046D843 /* MobileCoreServices.framework */; };
 		6D835561165E5B0A0046D843 /* SZThreadModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D835560165E5B0A0046D843 /* SZThreadModel.m */; };
@@ -254,7 +253,6 @@
 		6D8354E8165E20090046D843 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		6D835514165E213D0046D843 /* DTTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTTestViewController.h; sourceTree = "<group>"; };
 		6D835515165E213D0046D843 /* DTTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTTestViewController.m; sourceTree = "<group>"; };
-		6D83553E165E3A3A0046D843 /* CoreTextIssues.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = CoreTextIssues.html; sourceTree = "<group>"; };
 		6D835556165E3C170046D843 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		6D835558165E3D9B0046D843 /* libDTFoundation.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libDTFoundation.a; path = "/Users/SZX/Library/Developer/Xcode/DerivedData/Lilybbs-fwfiugkvoyqlpzbanlfwhqfevcym/Build/Products/Debug-iphoneos/libDTFoundation.a"; sourceTree = "<absolute>"; };
 		6D83555A165E3DA10046D843 /* libDTHTMLParser.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libDTHTMLParser.a; path = "/Users/SZX/Library/Developer/Xcode/DerivedData/Lilybbs-fwfiugkvoyqlpzbanlfwhqfevcym/Build/Products/Debug-iphoneos/libDTHTMLParser.a"; sourceTree = "<absolute>"; };
@@ -447,7 +445,6 @@
 				6D275C001661313E003BE3D1 /* emotions */,
 				6D8C25DC165E6DEF00AD631E /* SZThreadViewController */,
 				6D83555E165E5A9B0046D843 /* Models */,
-				6D83553E165E3A3A0046D843 /* CoreTextIssues.html */,
 				6D835513165E21190046D843 /* DTTestViewController */,
 				6D8354A9165E1ECD0046D843 /* SZAppDelegate.h */,
 				6D8354AA165E1ECD0046D843 /* SZAppDelegate.m */,
@@ -660,7 +657,6 @@
 				6D8354AD165E1ECD0046D843 /* Default.png in Resources */,
 				6D8354AF165E1ECD0046D843 /* Default@2x.png in Resources */,
 				6D8354B1165E1ECD0046D843 /* Default-568h@2x.png in Resources */,
-				6D83553F165E3A3A0046D843 /* CoreTextIssues.html in Resources */,
 				6D8C25E1165E6E7700AD631E /* threadTest.plist in Resources */,
 				6D275C251661313E003BE3D1 /* [,-D].gif in Resources */,
 				6D275C261661313E003BE3D1 /* [,bye].gif in Resources */,

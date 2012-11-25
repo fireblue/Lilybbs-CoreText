@@ -14,7 +14,7 @@
 @property (nonatomic, strong) NSString *postAuthorId;
 @property (nonatomic, strong) NSString *postAuthorNickname;
 
-@property (nonatomic) NSInteger postFloor;
+@property (nonatomic, strong) NSNumber *postFloor;
 @property (nonatomic, strong) NSDate *postDate;
 @property (nonatomic, strong) NSString *postContent;
 @property (nonatomic, strong) NSString *postAuthorIp;
