@@ -1,0 +1,12 @@
+[submodule "Externals/AFNetworking"]
+	path = Externals/AFNetworking
+	url = git://github.com/AFNetworking/AFNetworking.git
+[submodule "Externals/DTCoreText"]
+	path = Externals/DTCoreText
+	url = git://github.com/Cocoanetics/DTCoreText.git
+[submodule "Externals/SDWebImage"]
+	path = Externals/SDWebImage
+	url = git://github.com/rs/SDWebImage.git
+[submodule "Externals/SCGifImageView"]
+	path = Externals/SCGifImageView
+	url = git://github.com/shichangone/SCGifExample.git

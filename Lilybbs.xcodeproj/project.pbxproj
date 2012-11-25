@@ -44,7 +44,6 @@
 		6D275C461661313E003BE3D1 /* [-U].gif in Resources */ = {isa = PBXBuildFile; fileRef = 6D275C221661313E003BE3D1 /* [-U].gif */; };
 		6D275C471661313E003BE3D1 /* [-X].gif in Resources */ = {isa = PBXBuildFile; fileRef = 6D275C231661313E003BE3D1 /* [-X].gif */; };
 		6D275C481661313E003BE3D1 /* [-|].gif in Resources */ = {isa = PBXBuildFile; fileRef = 6D275C241661313E003BE3D1 /* [-|].gif */; };
-		6D275C50166134F2003BE3D1 /* UIImage+animatedGIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D275C4F166134F2003BE3D1 /* UIImage+animatedGIF.m */; };
 		6D2A65CB165FE481004D7E9F /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D2A65B9165FE481004D7E9F /* AFHTTPClient.m */; };
 		6D2A65CC165FE481004D7E9F /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D2A65BB165FE481004D7E9F /* AFHTTPRequestOperation.m */; };
 		6D2A65CD165FE481004D7E9F /* AFImageRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D2A65BD165FE481004D7E9F /* AFImageRequestOperation.m */; };
@@ -207,8 +206,6 @@
 		6D275C221661313E003BE3D1 /* [-U].gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "[-U].gif"; sourceTree = "<group>"; };
 		6D275C231661313E003BE3D1 /* [-X].gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "[-X].gif"; sourceTree = "<group>"; };
 		6D275C241661313E003BE3D1 /* [-|].gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "[-|].gif"; sourceTree = "<group>"; };
-		6D275C4E166134F2003BE3D1 /* UIImage+animatedGIF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+animatedGIF.h"; sourceTree = "<group>"; };
-		6D275C4F166134F2003BE3D1 /* UIImage+animatedGIF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+animatedGIF.m"; sourceTree = "<group>"; };
 		6D2A65B8165FE481004D7E9F /* AFHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPClient.h; sourceTree = "<group>"; };
 		6D2A65B9165FE481004D7E9F /* AFHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPClient.m; sourceTree = "<group>"; };
 		6D2A65BA165FE481004D7E9F /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
@@ -332,16 +329,6 @@
 			);
 			path = emotions;
 			sourceTree = "<group>";
-		};
-		6D275C4D166134F2003BE3D1 /* uiimage-from-animated-gif */ = {
-			isa = PBXGroup;
-			children = (
-				6D275C4E166134F2003BE3D1 /* UIImage+animatedGIF.h */,
-				6D275C4F166134F2003BE3D1 /* UIImage+animatedGIF.m */,
-			);
-			name = "uiimage-from-animated-gif";
-			path = "Externals/uiimage-from-animated-gif";
-			sourceTree = SOURCE_ROOT;
 		};
 		6D2A65B7165FE481004D7E9F /* AFNetworking */ = {
 			isa = PBXGroup;
@@ -507,7 +494,6 @@
 			isa = PBXGroup;
 			children = (
 				6D80FE56166204C40079480C /* SCGifImageView */,
-				6D275C4D166134F2003BE3D1 /* uiimage-from-animated-gif */,
 				6D2A65FE165FE492004D7E9F /* SDWebImage.xcodeproj */,
 				6D2A65D5165FE48B004D7E9F /* DTCoreText.xcodeproj */,
 				6D2A65B7165FE481004D7E9F /* AFNetworking */,
@@ -722,7 +708,6 @@
 				6D2A65D3165FE481004D7E9F /* UIImageView+AFNetworking.m in Sources */,
 				6D30084E1660EAB900DEC1F5 /* SZAttributedTextCell.m in Sources */,
 				6D275BFF16611F7D003BE3D1 /* SZLazyImageButton.m in Sources */,
-				6D275C50166134F2003BE3D1 /* UIImage+animatedGIF.m in Sources */,
 				6D80FE59166204D90079480C /* SCGIFImageView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
