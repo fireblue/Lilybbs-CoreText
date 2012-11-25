@@ -9,9 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "SZThreadModel.h"
 #import "DTAttributedTextView.h"
+#import "SZLazyImageButton.h"
 #import "SZLazyImageView.h"
 
-@interface SZThreadViewController : UITableViewController<DTAttributedTextContentViewDelegate, DTLazyImageViewDelegate>
+@interface SZThreadViewController : UITableViewController<DTAttributedTextContentViewDelegate, SZLazyImageButtonDelegate>
 {
     SZThreadModel *_thread;
     NSCache *_cellCache;

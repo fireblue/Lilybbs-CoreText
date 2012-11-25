@@ -9,6 +9,9 @@
 #import "SZThreadViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import <MediaPlayer/MediaPlayer.h>
+#import "SZAttributedTextCell.h"
+
+#import "SCGIFImageView.h"
 
 @interface SZThreadViewController ()
 
@@ -53,11 +56,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
     self.title = @"详细信息";
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
- 
+    
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
@@ -74,12 +77,12 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	return [_thread.threadPosts count];
+	return [_thread.threadPosts count]+1;
 }
 
-- (void)configureCell:(DTAttributedTextCell *)cell forIndexPath:(NSIndexPath *)indexPath
+- (void)configureCell:(SZAttributedTextCell *)cell forIndexPath:(NSIndexPath *)indexPath
 {
-	SZPostModel *snippet = [_thread.threadPosts objectAtIndex:indexPath.row];
+	SZPostModel *snippet = [_thread.threadPosts objectAtIndex:indexPath.row-1];
 	
 	NSString *html = snippet.postContent;
 	
@@ -87,9 +90,14 @@
 	
 	cell.attributedTextContextView.shouldDrawImages = YES;
     cell.attributedTextContextView.delegate = self;
+    
+    cell.authorLabel.text = [NSString stringWithFormat:@"%@(%@)", snippet.postAuthorId, snippet.postAuthorNickname];
+    cell.dateLabel.text = snippet.postDate.description;
+    cell.ipLabel.text = snippet.postAuthorIp;
+    
 }
 
-- (DTAttributedTextCell *)tableView:(UITableView *)tableView preparedCellForIndexPath:(NSIndexPath *)indexPath
+- (SZAttributedTextCell *)tableView:(UITableView *)tableView preparedCellForIndexPath:(NSIndexPath *)indexPath
 {
 	static NSString *cellIdentifier = @"cellIdentifier";
     
@@ -101,16 +109,16 @@
 	// workaround for iOS 5 bug
 	NSString *key = [NSString stringWithFormat:@"%d-%d", indexPath.section, indexPath.row];
 	
-	DTAttributedTextCell *cell = [_cellCache objectForKey:key];
+	SZAttributedTextCell *cell = [_cellCache objectForKey:key];
     
 	if (!cell)
 	{
 		// reuse does not work for variable height
-		//cell = (DTAttributedTextCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+		//cell = (SZAttributedTextCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         
 		if (!cell)
 		{
-			cell = [[DTAttributedTextCell alloc] initWithReuseIdentifier:cellIdentifier accessoryType:UITableViewCellAccessoryDisclosureIndicator];
+			cell = [[SZAttributedTextCell alloc] initWithReuseIdentifier:cellIdentifier accessoryType:UITableViewCellAccessoryDisclosureIndicator];
 		}
 		
 		// cache it
@@ -122,18 +130,40 @@
 	return cell;
 }
 
+- (UITableViewCell *)tableView:(UITableView *)tableView prepareTitleCellForIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *titleCellIdentifier = @"TitleCellIdentifier";
+    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:titleCellIdentifier];
+    if (nil == cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:self.tableView.style reuseIdentifier:titleCellIdentifier];
+    }
+    cell.textLabel.text = _thread.threadTitle;
+    return cell;
+}
+
+
 // disable this method to get static height = better performance
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	DTAttributedTextCell *cell = (DTAttributedTextCell *)[self tableView:tableView preparedCellForIndexPath:indexPath];
-    
-	return [cell requiredRowHeightInTableView:tableView];
+    if (indexPath.row==0) {
+        return 65.0f;
+    }
+    else {
+        SZAttributedTextCell *cell = (SZAttributedTextCell *)[self tableView:tableView preparedCellForIndexPath:indexPath];
+        
+        return [cell requiredRowHeightInTableView:tableView];
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	DTAttributedTextCell *cell = (DTAttributedTextCell *)[self tableView:tableView preparedCellForIndexPath:indexPath];
-	
+    UITableViewCell *cell = nil;
+    if (indexPath.row != 0) {
+        cell = [self tableView:tableView preparedCellForIndexPath:indexPath];
+	}
+    else {
+        cell = [self tableView:tableView prepareTitleCellForIndexPath:indexPath];
+    }
 	return cell;
 }
 #pragma mark - Table view delegate
@@ -147,6 +177,7 @@
      // Pass the selected object to the new view controller.
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 
@@ -269,29 +300,32 @@
 	}
 	else if (attachment.contentType == DTTextAttachmentTypeImage)
 	{
-		// if the attachment has a hyperlinkURL then this is currently ignored
-		SZLazyImageView *imageView = [[SZLazyImageView alloc] initWithFrame:frame];
-		imageView.delegate = self;
-        imageView.parent = attributedTextContentView;
-		if (attachment.contents)
-		{
-			imageView.image = attachment.contents;
-		}
-		
-		// url for deferred loading
-		imageView.url = attachment.contentURL;
-		
-		// if there is a hyperlink then add a link button on top of this image
-		if (attachment.hyperLinkURL)
-		{
-			// NOTE: this is a hack, you probably want to use your own image view and touch handling
-			// also, this treats an image with a hyperlink by itself because we don't have the GUID of the link parts
-			imageView.userInteractionEnabled = YES;
-			DTLinkButton *button = (DTLinkButton *)[self attributedTextContentView:attributedTextContentView viewForLink:attachment.hyperLinkURL identifier:attachment.hyperLinkGUID frame:imageView.bounds];
-			[imageView addSubview:button];
-		}
-		
-		return imageView;
+        if ([attachment.contentURL isFileURL] && [attachment.contentURL.absoluteString hasSuffix:@".gif"]) {
+            
+            // if the attachment has a hyperlinkURL then this is currently ignored
+            SCGIFImageView *imageView = [[SCGIFImageView alloc] initWithGIFData:[NSData dataWithContentsOfURL:attachment.contentURL]];
+            return imageView;
+            
+        }
+        else {
+            // if the attachment has a hyperlinkURL then this is currently ignored
+            SZLazyImageButton *imageView = [[SZLazyImageButton alloc] initWithFrame:frame];
+            imageView.delegate = self;
+            imageView.parent = attributedTextContentView;
+            if (attachment.contents)
+            {
+                imageView.image = attachment.contents;
+            }
+            
+            // url for deferred loading
+            imageView.url = attachment.contentURL;
+            
+            [imageView setImageWithURL:attachment.contentURL];
+            
+            [imageView addTarget:self action:@selector(imageButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+            
+            return imageView;
+        }
 	}
 	else if (attachment.contentType == DTTextAttachmentTypeIframe)
 	{
@@ -339,6 +373,11 @@
 
 
 #pragma mark Actions
+
+- (void)imageButtonPressed:(UIButton *)sender
+{
+    NSLog(@"image pressed");
+}
 
 - (void)linkPushed:(DTLinkButton *)button
 {
@@ -391,14 +430,15 @@
 
 #pragma mark DTLazyImageViewDelegate
 
-- (void)lazyImageView:(SZLazyImageView *)lazyImageView didChangeImageSize:(CGSize)size {
-	NSURL *url = lazyImageView.url;
+- (void)lazyImageView:(SZLazyImageView *)lazyImageButton didChangeImageSize:(CGSize)size
+{
+	NSURL *url = lazyImageButton.url;
 	CGSize imageSize = size;
 	
 	NSPredicate *pred = [NSPredicate predicateWithFormat:@"contentURL == %@", url];
 	
 	// update all attachments that matchin this URL (possibly multiple images with same size)
-	for (DTTextAttachment *oneAttachment in [lazyImageView.parent.layoutFrame textAttachmentsWithPredicate:pred])
+	for (DTTextAttachment *oneAttachment in [lazyImageButton.parent.layoutFrame textAttachmentsWithPredicate:pred])
 	{
 		oneAttachment.originalSize = imageSize;
 		
@@ -407,12 +447,33 @@
 			oneAttachment.displaySize = imageSize;
 		}
 	}
-	
-    lazyImageView.button.frame = CGRectMake(10, 10, size.width-20, size.height-20);
-    
 	// redo layout
 	// here we're layouting the entire string, might be more efficient to only relayout the paragraphs that contain these attachments
-	[lazyImageView.parent relayoutText];
+	[lazyImageButton.parent relayoutText];
+    
+    [self.tableView reloadData];
+}
+
+- (void)lazyImageButton:(SZLazyImageButton *)lazyImageButton didChangeImageSize:(CGSize)size
+{
+	NSURL *url = lazyImageButton.url;
+	CGSize imageSize = size;
+	
+	NSPredicate *pred = [NSPredicate predicateWithFormat:@"contentURL == %@", url];
+	
+	// update all attachments that matchin this URL (possibly multiple images with same size)
+	for (DTTextAttachment *oneAttachment in [lazyImageButton.parent.layoutFrame textAttachmentsWithPredicate:pred])
+	{
+		oneAttachment.originalSize = imageSize;
+		
+		if (!CGSizeEqualToSize(imageSize, oneAttachment.displaySize))
+		{
+			oneAttachment.displaySize = imageSize;
+		}
+	}
+	// redo layout
+	// here we're layouting the entire string, might be more efficient to only relayout the paragraphs that contain these attachments
+	[lazyImageButton.parent relayoutText];
     
     [self.tableView reloadData];
 }
