@@ -75,9 +75,14 @@
 		6D83555D165E3E030046D843 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D83555C165E3E030046D843 /* MobileCoreServices.framework */; };
 		6D835561165E5B0A0046D843 /* SZThreadModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D835560165E5B0A0046D843 /* SZThreadModel.m */; };
 		6D835564165E5B1F0046D843 /* SZPostModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D835563165E5B1F0046D843 /* SZPostModel.m */; };
+		6D8574AB16634493000760CD /* libTapkuLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D8574A61663447F000760CD /* libTapkuLibrary.a */; };
+		6D8574AD1663452B000760CD /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D8574AC1663452B000760CD /* MapKit.framework */; };
+		6D8574BB16635177000760CD /* UIImage+animatedGIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D8574BA16635177000760CD /* UIImage+animatedGIF.m */; };
+		6D8A03FD1663A8EA00FFDB58 /* SZTitleHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D8A03FC1663A8EA00FFDB58 /* SZTitleHeaderCell.m */; };
 		6D8C25DF165E6E1B00AD631E /* SZThreadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D8C25DE165E6E1B00AD631E /* SZThreadViewController.m */; };
 		6D8C25E1165E6E7700AD631E /* threadTest.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6D8C25E0165E6E7700AD631E /* threadTest.plist */; };
 		6D8C25E4165E8A2F00AD631E /* SZLazyImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D8C25E3165E8A2F00AD631E /* SZLazyImageView.m */; };
+		6DE75C071663D3BF0085F111 /* SZTitleTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DE75C061663D3BF0085F111 /* SZTitleTextCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -164,6 +169,27 @@
 			proxyType = 1;
 			remoteGlobalIDString = A70F11DD148632CD009202BF;
 			remoteInfo = "Static Library";
+		};
+		6D8574A51663447F000760CD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6D85749D1663447F000760CD /* TapkuLibrary.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2AAC07E0554694100DB518D;
+			remoteInfo = TapkuLibrary;
+		};
+		6D8574A71663447F000760CD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6D85749D1663447F000760CD /* TapkuLibrary.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3B45DDF1134C736600D24C1A;
+			remoteInfo = LogicTests;
+		};
+		6D8574A91663448B000760CD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6D85749D1663447F000760CD /* TapkuLibrary.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC07D0554694100DB518D;
+			remoteInfo = TapkuLibrary;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -258,11 +284,19 @@
 		6D835560165E5B0A0046D843 /* SZThreadModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SZThreadModel.m; sourceTree = "<group>"; };
 		6D835562165E5B1F0046D843 /* SZPostModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SZPostModel.h; sourceTree = "<group>"; };
 		6D835563165E5B1F0046D843 /* SZPostModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SZPostModel.m; sourceTree = "<group>"; };
+		6D85749D1663447F000760CD /* TapkuLibrary.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TapkuLibrary.xcodeproj; path = Externals/TapkuLibrary/src/TapkuLibrary.xcodeproj; sourceTree = SOURCE_ROOT; };
+		6D8574AC1663452B000760CD /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		6D8574B916635177000760CD /* UIImage+animatedGIF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+animatedGIF.h"; sourceTree = "<group>"; };
+		6D8574BA16635177000760CD /* UIImage+animatedGIF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+animatedGIF.m"; sourceTree = "<group>"; };
+		6D8A03FB1663A8EA00FFDB58 /* SZTitleHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SZTitleHeaderCell.h; sourceTree = "<group>"; };
+		6D8A03FC1663A8EA00FFDB58 /* SZTitleHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SZTitleHeaderCell.m; sourceTree = "<group>"; };
 		6D8C25DD165E6E1B00AD631E /* SZThreadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SZThreadViewController.h; sourceTree = "<group>"; };
 		6D8C25DE165E6E1B00AD631E /* SZThreadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SZThreadViewController.m; sourceTree = "<group>"; };
 		6D8C25E0165E6E7700AD631E /* threadTest.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = threadTest.plist; sourceTree = "<group>"; };
 		6D8C25E2165E8A2F00AD631E /* SZLazyImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SZLazyImageView.h; sourceTree = "<group>"; };
 		6D8C25E3165E8A2F00AD631E /* SZLazyImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SZLazyImageView.m; sourceTree = "<group>"; };
+		6DE75C051663D3BF0085F111 /* SZTitleTextCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SZTitleTextCell.h; sourceTree = "<group>"; };
+		6DE75C061663D3BF0085F111 /* SZTitleTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SZTitleTextCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -270,8 +304,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6D8574AB16634493000760CD /* libTapkuLibrary.a in Frameworks */,
 				6D2A6613165FE4B1004D7E9F /* libSDWebImage.a in Frameworks */,
 				6D2A6612165FE4A9004D7E9F /* libDTCoreText.a in Frameworks */,
+				6D8574AD1663452B000760CD /* MapKit.framework in Frameworks */,
 				6D83555D165E3E030046D843 /* MobileCoreServices.framework in Frameworks */,
 				6D835557165E3C170046D843 /* MediaPlayer.framework in Frameworks */,
 				6D8354E9165E20090046D843 /* CoreText.framework in Frameworks */,
@@ -393,6 +429,7 @@
 		6D83548B165E1ECD0046D843 = {
 			isa = PBXGroup;
 			children = (
+				6D8574AC1663452B000760CD /* MapKit.framework */,
 				6DBFE309165FD876006E5EBC /* Externals */,
 				6D8354A0165E1ECD0046D843 /* Lilybbs */,
 				6D835499165E1ECD0046D843 /* Frameworks */,
@@ -474,6 +511,25 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
+		6D85749E1663447F000760CD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6D8574A61663447F000760CD /* libTapkuLibrary.a */,
+				6D8574A81663447F000760CD /* LogicTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		6D8574B816635177000760CD /* uiimage-from-animated-gif */ = {
+			isa = PBXGroup;
+			children = (
+				6D8574B916635177000760CD /* UIImage+animatedGIF.h */,
+				6D8574BA16635177000760CD /* UIImage+animatedGIF.m */,
+			);
+			name = "uiimage-from-animated-gif";
+			path = "Externals/uiimage-from-animated-gif";
+			sourceTree = SOURCE_ROOT;
+		};
 		6D8C25DC165E6DEF00AD631E /* SZThreadViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -486,6 +542,10 @@
 				6D30084D1660EAB900DEC1F5 /* SZAttributedTextCell.m */,
 				6D275BFD16611F7D003BE3D1 /* SZLazyImageButton.h */,
 				6D275BFE16611F7D003BE3D1 /* SZLazyImageButton.m */,
+				6D8A03FB1663A8EA00FFDB58 /* SZTitleHeaderCell.h */,
+				6D8A03FC1663A8EA00FFDB58 /* SZTitleHeaderCell.m */,
+				6DE75C051663D3BF0085F111 /* SZTitleTextCell.h */,
+				6DE75C061663D3BF0085F111 /* SZTitleTextCell.m */,
 			);
 			name = SZThreadViewController;
 			sourceTree = "<group>";
@@ -493,6 +553,8 @@
 		6DBFE309165FD876006E5EBC /* Externals */ = {
 			isa = PBXGroup;
 			children = (
+				6D8574B816635177000760CD /* uiimage-from-animated-gif */,
+				6D85749D1663447F000760CD /* TapkuLibrary.xcodeproj */,
 				6D80FE56166204C40079480C /* SCGifImageView */,
 				6D2A65FE165FE492004D7E9F /* SDWebImage.xcodeproj */,
 				6D2A65D5165FE48B004D7E9F /* DTCoreText.xcodeproj */,
@@ -516,6 +578,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				6D8574AA1663448B000760CD /* PBXTargetDependency */,
 				6D2A6611165FE4A1004D7E9F /* PBXTargetDependency */,
 				6D2A660F165FE49E004D7E9F /* PBXTargetDependency */,
 			);
@@ -552,6 +615,10 @@
 				{
 					ProductGroup = 6D2A65FF165FE492004D7E9F /* Products */;
 					ProjectRef = 6D2A65FE165FE492004D7E9F /* SDWebImage.xcodeproj */;
+				},
+				{
+					ProductGroup = 6D85749E1663447F000760CD /* Products */;
+					ProjectRef = 6D85749D1663447F000760CD /* TapkuLibrary.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -632,6 +699,20 @@
 			remoteRef = 6D2A660C165FE492004D7E9F /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		6D8574A61663447F000760CD /* libTapkuLibrary.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libTapkuLibrary.a;
+			remoteRef = 6D8574A51663447F000760CD /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		6D8574A81663447F000760CD /* LogicTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = LogicTests.octest;
+			remoteRef = 6D8574A71663447F000760CD /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -709,6 +790,9 @@
 				6D30084E1660EAB900DEC1F5 /* SZAttributedTextCell.m in Sources */,
 				6D275BFF16611F7D003BE3D1 /* SZLazyImageButton.m in Sources */,
 				6D80FE59166204D90079480C /* SCGIFImageView.m in Sources */,
+				6D8574BB16635177000760CD /* UIImage+animatedGIF.m in Sources */,
+				6D8A03FD1663A8EA00FFDB58 /* SZTitleHeaderCell.m in Sources */,
+				6DE75C071663D3BF0085F111 /* SZTitleTextCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -724,6 +808,11 @@
 			isa = PBXTargetDependency;
 			name = "Static Library";
 			targetProxy = 6D2A6610165FE4A1004D7E9F /* PBXContainerItemProxy */;
+		};
+		6D8574AA1663448B000760CD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = TapkuLibrary;
+			targetProxy = 6D8574A91663448B000760CD /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -748,6 +837,7 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -763,6 +853,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				USER_HEADER_SEARCH_PATHS = "";
 			};
@@ -777,7 +868,8 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: CAO CHUN";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: CAO CHUN";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -785,6 +877,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "3F27D6C7-1C13-4309-85A9-CC5D71ED7A28";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "3F27D6C7-1C13-4309-85A9-CC5D71ED7A28";
 				SDKROOT = iphoneos;
 				USER_HEADER_SEARCH_PATHS = "";
 				VALIDATE_PRODUCT = YES;
@@ -794,6 +888,7 @@
 		6D8354B5165E1ECD0046D843 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Lilybbs/Lilybbs-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -805,6 +900,7 @@
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
 			};
@@ -813,6 +909,8 @@
 		6D8354B6165E1ECD0046D843 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Lilybbs/Lilybbs-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -824,6 +922,8 @@
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
 			};

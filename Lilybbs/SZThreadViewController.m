@@ -12,6 +12,8 @@
 #import "SZAttributedTextCell.h"
 
 #import "SCGIFImageView.h"
+#import "SZTitleHeaderCell.h"
+#import "SZTitleTextCell.h"
 
 @interface SZThreadViewController ()
 
@@ -58,11 +60,8 @@
     [super viewDidLoad];
     
     self.title = @"详细信息";
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
     
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -77,12 +76,12 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	return [_thread.threadPosts count]+1;
+	return [_thread.threadPosts count]+2;
 }
 
 - (void)configureCell:(SZAttributedTextCell *)cell forIndexPath:(NSIndexPath *)indexPath
 {
-	SZPostModel *snippet = [_thread.threadPosts objectAtIndex:indexPath.row-1];
+	SZPostModel *snippet = [_thread.threadPosts objectAtIndex:indexPath.row-2];
 	
 	NSString *html = snippet.postContent;
 	
@@ -92,7 +91,7 @@
     cell.attributedTextContextView.delegate = self;
     
     cell.authorLabel.text = [NSString stringWithFormat:@"%@(%@)", snippet.postAuthorId, snippet.postAuthorNickname];
-    cell.dateLabel.text = snippet.postDate.description;
+    cell.dateLabel.text = [[SZAttributedTextCell dateFormatter] stringFromDate:snippet.postDate];
     cell.ipLabel.text = snippet.postAuthorIp;
     
 }
@@ -133,36 +132,63 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView prepareTitleCellForIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *titleCellIdentifier = @"TitleCellIdentifier";
-    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:titleCellIdentifier];
+    SZTitleTextCell *cell = [self.tableView dequeueReusableCellWithIdentifier:titleCellIdentifier];
     if (nil == cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:self.tableView.style reuseIdentifier:titleCellIdentifier];
+        cell = [[SZTitleTextCell alloc] initWithStyle:self.tableView.style reuseIdentifier:titleCellIdentifier];
     }
-    cell.textLabel.text = _thread.threadTitle;
+    cell.titleLabel.text = _thread.threadTitle;
     return cell;
 }
 
+- (UITableViewCell *)tableView:(UITableView *)tableView prepareTitleHeaderCellForIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *titleCellIdentifier = @"TitleHeaderCellIdentifier";
+    SZTitleHeaderCell *cell = [self.tableView dequeueReusableCellWithIdentifier:titleCellIdentifier];
+    if (nil == cell) {
+        cell = [[SZTitleHeaderCell alloc] initWithStyle:self.tableView.style reuseIdentifier:titleCellIdentifier];
+    }
+    cell.titleColor = [UIColor colorWithRed:46.0f/255.0f green:168.0f/255.0f blue:228.0f/255.0f alpha:1];
+    cell.subTitleLabel.text = @"Photography";
+    cell.dateLabel.text = @"11月22日  22:31:09  2012";
+    return cell;
+}
 
 // disable this method to get static height = better performance
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row==0) {
-        return 65.0f;
-    }
-    else {
-        SZAttributedTextCell *cell = (SZAttributedTextCell *)[self tableView:tableView preparedCellForIndexPath:indexPath];
-        
-        return [cell requiredRowHeightInTableView:tableView];
+    switch (indexPath.row) {
+        case 0:
+            return 40;
+            break;
+        case 1:
+        {
+            SZTitleTextCell *cell = (SZTitleTextCell *)[self tableView:tableView prepareTitleCellForIndexPath:indexPath];
+            return [cell requiredRowHeightInTableView:tableView];
+        }
+            break;
+        default:
+        {
+            SZAttributedTextCell *cell = (SZAttributedTextCell *)[self tableView:tableView preparedCellForIndexPath:indexPath];
+            
+            return [cell requiredRowHeightInTableView:tableView];
+        }
+            break;
     }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = nil;
-    if (indexPath.row != 0) {
-        cell = [self tableView:tableView preparedCellForIndexPath:indexPath];
-	}
-    else {
-        cell = [self tableView:tableView prepareTitleCellForIndexPath:indexPath];
+    switch (indexPath.row) {
+        case 0:
+            cell = [self tableView:tableView prepareTitleHeaderCellForIndexPath:indexPath];
+            break;
+        case 1:
+            cell = [self tableView:tableView prepareTitleCellForIndexPath:indexPath];
+            break;
+        default:
+            cell = [self tableView:tableView preparedCellForIndexPath:indexPath];
+            break;
     }
 	return cell;
 }
@@ -320,7 +346,7 @@
             // url for deferred loading
             imageView.url = attachment.contentURL;
             
-            [imageView setImageWithURL:attachment.contentURL];
+            [imageView setImageWithURL:attachment.contentURL placeholderImage:[UIImage imageNamed:@"Default"]];
             
             [imageView addTarget:self action:@selector(imageButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
             
