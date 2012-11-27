@@ -8,11 +8,16 @@
 
 #import "SZAppDelegate.h"
 #import "SZThreadViewController.h"
+#import "AFNetworkActivityIndicatorManager.h"
+#import "SDImageCache.h"
 
 @implementation SZAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
+    [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     //self.window.backgroundColor = [UIColor whiteColor];
@@ -53,6 +58,11 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
+{
+    [[SDImageCache sharedImageCache] clearMemory];
 }
 
 @end

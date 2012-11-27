@@ -59,6 +59,8 @@
 {
     [super viewDidLoad];
     
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
     self.title = @"详细信息";
     
     [self.tableView reloadData];
@@ -190,6 +192,7 @@
             cell = [self tableView:tableView preparedCellForIndexPath:indexPath];
             break;
     }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
 	return cell;
 }
 #pragma mark - Table view delegate
@@ -482,21 +485,23 @@
 
 - (void)lazyImageButton:(SZLazyImageButton *)lazyImageButton didChangeImageSize:(CGSize)size
 {
-	NSURL *url = lazyImageButton.url;
-	CGSize imageSize = size;
-	
-	NSPredicate *pred = [NSPredicate predicateWithFormat:@"contentURL == %@", url];
-	
-	// update all attachments that matchin this URL (possibly multiple images with same size)
-	for (DTTextAttachment *oneAttachment in [lazyImageButton.parent.layoutFrame textAttachmentsWithPredicate:pred])
-	{
-		oneAttachment.originalSize = imageSize;
-		
-		if (!CGSizeEqualToSize(imageSize, oneAttachment.displaySize))
-		{
-			oneAttachment.displaySize = imageSize;
-		}
-	}
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSURL *url = lazyImageButton.url;
+        CGSize imageSize = size;
+        
+        NSPredicate *pred = [NSPredicate predicateWithFormat:@"contentURL == %@", url];
+        
+        // update all attachments that matchin this URL (possibly multiple images with same size)
+        for (DTTextAttachment *oneAttachment in [lazyImageButton.parent.layoutFrame textAttachmentsWithPredicate:pred])
+        {
+            oneAttachment.originalSize = imageSize;
+            
+            if (!CGSizeEqualToSize(imageSize, oneAttachment.displaySize))
+            {
+                oneAttachment.displaySize = imageSize;
+            }
+        }
+    });
 	// redo layout
 	// here we're layouting the entire string, might be more efficient to only relayout the paragraphs that contain these attachments
 	[lazyImageButton.parent relayoutText];

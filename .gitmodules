@@ -7,9 +7,6 @@
 [submodule "Externals/SDWebImage"]
 	path = Externals/SDWebImage
 	url = git://github.com/rs/SDWebImage.git
-[submodule "Externals/SCGifImageView"]
-	path = Externals/SCGifImageView
-	url = git://github.com/shichangone/SCGifExample.git
 [submodule "Externals/TapkuLibrary"]
 	path = Externals/TapkuLibrary
 	url = git://github.com/devinross/tapkulibrary.git

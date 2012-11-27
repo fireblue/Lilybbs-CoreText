@@ -49,7 +49,7 @@
     subTitleLabel.frame = CGRectMake(5, 5, 100, 30);
     subTitleLabel.backgroundColor = titleColor;
     
-    dateLabel.frame = CGRectMake(120, 5, 180, 30);
+    dateLabel.frame = CGRectMake(120, 5, 180, 34);
     
     
     

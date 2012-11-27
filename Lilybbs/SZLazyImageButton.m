@@ -25,6 +25,8 @@
 
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
 #import "SZLazyImageButton.h"
+#import "SDImageCache.h"
+#import "UIImage+Scale.h"
 
 static char kAFImageRequestOperationObjectKey;
 
@@ -41,9 +43,6 @@ static char kAFImageRequestOperationObjectKey;
 @synthesize parent;
 @synthesize url;
 
-- (void)af_setImageRequestOperation:(AFImageRequestOperation *)imageRequestOperation {
-    objc_setAssociatedObject(self, &kAFImageRequestOperationObjectKey, imageRequestOperation, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
 
 + (NSOperationQueue *)af_sharedImageRequestOperationQueue {
     static NSOperationQueue *_af_imageRequestOperationQueue = nil;
@@ -79,55 +78,59 @@ static char kAFImageRequestOperationObjectKey;
 {
     [self cancelImageRequestOperation];
     
-    UIImage *cachedImage = nil;//[[[self class] af_sharedImageCache] cachedImageForRequest:urlRequest];
-    if (cachedImage) {
-        [self setBackgroundImage:cachedImage forState:UIControlStateNormal];
-        [self setBackgroundImage:cachedImage forState:UIControlStateHighlighted];
-        [self setBackgroundImage:cachedImage forState:UIControlStateSelected];
-        self.af_imageRequestOperation = nil;
-        
-        if (success) {
-            success(nil, nil, cachedImage);
-        }
-    } else {
-        
-        [self setBackgroundImage:placeholderImage forState:UIControlStateNormal];
-        [self setBackgroundImage:placeholderImage forState:UIControlStateHighlighted];
-        [self setBackgroundImage:placeholderImage forState:UIControlStateSelected];
-        
-        AFImageRequestOperation *requestOperation = [[AFImageRequestOperation alloc] initWithRequest:urlRequest];
-        [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-            if ([[urlRequest URL] isEqual:[[self.af_imageRequestOperation request] URL]]) {
-                if (success) {
-                    success(operation.request, operation.response, responseObject);
-                } else {
-                    
-                    [self setBackgroundImage:responseObject forState:UIControlStateNormal];
-                    [self setBackgroundImage:responseObject forState:UIControlStateHighlighted];
-                    [self setBackgroundImage:responseObject forState:UIControlStateSelected];
-                    self.image = responseObject;
-                    [self notify];
-                    
-                }
-                
-                self.af_imageRequestOperation = nil;
-            }
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        UIImage *cachedImage = [[SDImageCache sharedImageCache] imageFromKey:urlRequest.URL.absoluteString];
+        if (cachedImage) {
+            self.image = cachedImage;
             
-            //[[[self class] af_sharedImageCache] cacheImage:responseObject forRequest:urlRequest];
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            if ([[urlRequest URL] isEqual:[[self.af_imageRequestOperation request] URL]]) {
-                if (failure) {
-                    failure(operation.request, operation.response, error);
-                }
+            dispatch_async(dispatch_get_main_queue(), ^{
                 
+                [self setBackgroundImage:cachedImage forState:UIControlStateNormal];
                 self.af_imageRequestOperation = nil;
+                
+                [self performSelector:@selector(notify) withObject:nil afterDelay:0.0];
+            });
+            if (success) {
+                success(nil, nil, cachedImage);
             }
-        }];
-        
-        self.af_imageRequestOperation = requestOperation;
-        
-        [[[self class] af_sharedImageRequestOperationQueue] addOperation:self.af_imageRequestOperation];
-    }
+        } else {
+            
+            [self setBackgroundImage:placeholderImage forState:UIControlStateNormal];
+            
+            AFImageRequestOperation *requestOperation = [[AFImageRequestOperation alloc] initWithRequest:urlRequest];
+            [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+                if ([[urlRequest URL] isEqual:[[self.af_imageRequestOperation request] URL]]) {
+                    if (success) {
+                        success(operation.request, operation.response, responseObject);
+                    } else {
+                        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                            UIImage *scaledImage = [self minifyImageForDisplay:responseObject];
+                            self.image = scaledImage;
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                [self setBackgroundImage:scaledImage forState:UIControlStateNormal];
+                                [self notify];
+                            });
+                            [[SDImageCache sharedImageCache] storeImage:scaledImage forKey:urlRequest.URL.absoluteString toDisk:YES];
+                        });
+                    }
+                    
+                    self.af_imageRequestOperation = nil;
+                }
+            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                if ([[urlRequest URL] isEqual:[[self.af_imageRequestOperation request] URL]]) {
+                    if (failure) {
+                        failure(operation.request, operation.response, error);
+                    }
+                    
+                    self.af_imageRequestOperation = nil;
+                }
+            }];
+            
+            self.af_imageRequestOperation = requestOperation;
+            
+            [[[self class] af_sharedImageRequestOperationQueue] addOperation:self.af_imageRequestOperation];
+        }
+    });
 }
 
 - (void)notify
@@ -150,6 +153,22 @@ static char kAFImageRequestOperationObjectKey;
 - (void)cancelImageRequestOperation {
     [self.af_imageRequestOperation cancel];
     self.af_imageRequestOperation = nil;
+}
+
+- (UIImage *)minifyImageForDisplay:(UIImage *)originalImage
+{
+	CGFloat _fullWidth = originalImage.size.width;
+	CGFloat _fullHeight = originalImage.size.height;
+    CGFloat displayWidth = _fullWidth;
+	CGFloat displayHeight = _fullHeight;
+	
+	if (displayWidth>0 && displayHeight>0) {
+		displayWidth = MIN(_fullWidth, 300);
+		displayHeight = displayWidth * (_fullHeight/_fullWidth);
+    }
+    
+    UIImage *scaledImage = [originalImage scaledImageOfSize:CGSizeMake(displayWidth*2, displayHeight*2)];
+    return scaledImage;
 }
 
 @end
