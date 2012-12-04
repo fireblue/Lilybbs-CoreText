@@ -92,6 +92,8 @@
 	cell.attributedTextContextView.shouldDrawImages = YES;
     cell.attributedTextContextView.delegate = self;
     
+    cell.indexPath = indexPath;
+    
     cell.authorLabel.text = [NSString stringWithFormat:@"%@(%@)", snippet.postAuthorId, snippet.postAuthorNickname];
     cell.dateLabel.text = [[SZAttributedTextCell dateFormatter] stringFromDate:snippet.postDate];
     cell.ipLabel.text = snippet.postAuthorIp;
@@ -379,7 +381,7 @@
 	
 	return nil;
 }
-
+/*
 - (BOOL)attributedTextContentView:(DTAttributedTextContentView *)attributedTextContentView shouldDrawBackgroundForTextBlock:(DTTextBlock *)textBlock frame:(CGRect)frame context:(CGContextRef)context forLayoutFrame:(DTCoreTextLayoutFrame *)layoutFrame
 {
 	UIBezierPath *roundedRect = [UIBezierPath bezierPathWithRoundedRect:frame cornerRadius:10];
@@ -399,7 +401,7 @@
 	
 	return YES; // draw standard background
 }
-
+*/
 
 #pragma mark Actions
 
@@ -459,33 +461,9 @@
 
 #pragma mark DTLazyImageViewDelegate
 
-- (void)lazyImageView:(SZLazyImageView *)lazyImageButton didChangeImageSize:(CGSize)size
-{
-	NSURL *url = lazyImageButton.url;
-	CGSize imageSize = size;
-	
-	NSPredicate *pred = [NSPredicate predicateWithFormat:@"contentURL == %@", url];
-	
-	// update all attachments that matchin this URL (possibly multiple images with same size)
-	for (DTTextAttachment *oneAttachment in [lazyImageButton.parent.layoutFrame textAttachmentsWithPredicate:pred])
-	{
-		oneAttachment.originalSize = imageSize;
-		
-		if (!CGSizeEqualToSize(imageSize, oneAttachment.displaySize))
-		{
-			oneAttachment.displaySize = imageSize;
-		}
-	}
-	// redo layout
-	// here we're layouting the entire string, might be more efficient to only relayout the paragraphs that contain these attachments
-	[lazyImageButton.parent relayoutText];
-    
-    [self.tableView reloadData];
-}
-
 - (void)lazyImageButton:(SZLazyImageButton *)lazyImageButton didChangeImageSize:(CGSize)size
 {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
         NSURL *url = lazyImageButton.url;
         CGSize imageSize = size;
         
@@ -501,10 +479,11 @@
                 oneAttachment.displaySize = imageSize;
             }
         }
+        
+        [lazyImageButton.parent relayoutText];
     });
 	// redo layout
 	// here we're layouting the entire string, might be more efficient to only relayout the paragraphs that contain these attachments
-	[lazyImageButton.parent relayoutText];
     
     [self.tableView reloadData];
 }

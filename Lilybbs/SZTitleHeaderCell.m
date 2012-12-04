@@ -16,12 +16,10 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        
         titleColor = [UIColor grayColor];
         
         headerLayer = [[CALayer alloc] init];
         [self.contentView.layer addSublayer:headerLayer];
-        
         
         subTitleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         subTitleLabel.textColor = [UIColor whiteColor];

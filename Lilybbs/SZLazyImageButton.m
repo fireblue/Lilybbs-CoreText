@@ -83,10 +83,10 @@ static char kAFImageRequestOperationObjectKey;
         if (cachedImage) {
             self.image = cachedImage;
             
+            self.af_imageRequestOperation = nil;
             dispatch_async(dispatch_get_main_queue(), ^{
                 
                 [self setBackgroundImage:cachedImage forState:UIControlStateNormal];
-                self.af_imageRequestOperation = nil;
                 
                 [self performSelector:@selector(notify) withObject:nil afterDelay:0.0];
             });
@@ -103,14 +103,14 @@ static char kAFImageRequestOperationObjectKey;
                     if (success) {
                         success(operation.request, operation.response, responseObject);
                     } else {
-                        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
                             UIImage *scaledImage = [self minifyImageForDisplay:responseObject];
                             self.image = scaledImage;
+                            [[SDImageCache sharedImageCache] storeImage:scaledImage forKey:urlRequest.URL.absoluteString toDisk:YES];
                             dispatch_async(dispatch_get_main_queue(), ^{
                                 [self setBackgroundImage:scaledImage forState:UIControlStateNormal];
                                 [self notify];
                             });
-                            [[SDImageCache sharedImageCache] storeImage:scaledImage forKey:urlRequest.URL.absoluteString toDisk:YES];
                         });
                     }
                     
@@ -166,7 +166,7 @@ static char kAFImageRequestOperationObjectKey;
 		displayWidth = MIN(_fullWidth, 300);
 		displayHeight = displayWidth * (_fullHeight/_fullWidth);
     }
-    
+     
     UIImage *scaledImage = [originalImage scaledImageOfSize:CGSizeMake(displayWidth*2, displayHeight*2)];
     return scaledImage;
 }

@@ -11,6 +11,7 @@
 
 @implementation SZAttributedTextCell
 
+@synthesize indexPath;
 @synthesize authorLabel, dateLabel, ipLabel;
 @synthesize date;
 
@@ -59,10 +60,7 @@
 	CGRect frame = CGRectMake(0, 50, self.contentView.bounds.size.width, neededContentHeight);
 	
 	// only change frame if width has changed to avoid extra layouting
-	if (self.attributedTextContextView.frame.origin.y != 40)
-	{
-		self.attributedTextContextView.frame = frame;
-	}
+	self.attributedTextContextView.frame = frame;
     
     ipLabel.frame = CGRectMake(5, 60+neededContentHeight, 320, 20);
 }

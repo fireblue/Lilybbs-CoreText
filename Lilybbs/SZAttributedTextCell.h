@@ -12,6 +12,8 @@
 
 @interface SZAttributedTextCell : DTAttributedTextCell
 
+@property (nonatomic, strong) NSIndexPath *indexPath;
+
 @property (nonatomic, strong) UILabel *authorLabel;
 @property (nonatomic, strong) UILabel *dateLabel;
 @property (nonatomic, strong) UILabel *ipLabel;
